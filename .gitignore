@@ -9,4 +9,4 @@ venv/
 *.h5
 *.hdf5
 *.csv
-
+*.json
