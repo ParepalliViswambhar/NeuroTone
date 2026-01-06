@@ -1,3 +1,38 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:339195bb7434d5df346f9b4fcb049538b2ab2668dc34a6627b982286d90f10dc
-size 892
+{
+  "name": "emotion-ai-backend",
+  "version": "1.0.0",
+  "description": "Backend API for Emotion AI - Voice Emotion Detection System",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js",
+    "ml-service": "cd ml_service && python app.py",
+    "build": "echo 'No build step required for Node.js backend'"
+  },
+  "keywords": [
+    "emotion-detection",
+    "voice-analysis",
+    "ai",
+    "machine-learning",
+    "express",
+    "mongodb"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
+    "express": "^4.18.2",
+    "form-data": "^4.0.0",
+    "mongoose": "^8.0.0",
+    "multer": "^1.4.5-lts.1",
+    "node-fetch": "^2.7.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}
