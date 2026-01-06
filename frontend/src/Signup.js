@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Toast from "./Toast";
 import "./auth.css";
+import API_URL from "./config";
 
 const Signup = () => {
   const [username, setUsername] = useState("");
@@ -82,7 +83,7 @@ const Signup = () => {
 
     setLoading(true);
     try {
-      const response = await fetch("http://localhost:8000/api/auth/signup", {
+      const response = await fetch(`${API_URL}/api/auth/signup`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, password }),
@@ -185,7 +186,7 @@ const Signup = () => {
                   className="password-toggle"
                   onClick={() => setShowPassword(!showPassword)}
                 >
-                  {showPassword ? "👀" : "�"}
+                  {showPassword ? "👀" : "🙈"}
                 </button>
                 {errors.password && (
                   <span className="error-message">{errors.password}</span>
@@ -226,7 +227,7 @@ const Signup = () => {
                   className="password-toggle"
                   onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                 >
-                  {showConfirmPassword ? "👀" : "�"}
+                  {showConfirmPassword ? "👀" : "🙈"}
                 </button>
                 {errors.confirmPassword && (
                   <span className="error-message">{errors.confirmPassword}</span>

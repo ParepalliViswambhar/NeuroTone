@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { ReportSkeleton } from "./LoadingSkeleton";
+import API_URL from "./config";
 
 const Reports = () => {
   const [username, setUsername] = useState("");
@@ -22,7 +23,7 @@ const Reports = () => {
   const fetchReports = async (user) => {
     setLoading(true);
     try {
-      const response = await fetch(`http://localhost:8000/api/predictions/reports?username=${user}`);
+      const response = await fetch(`${API_URL}/api/predictions/reports?username=${user}`);
       const data = await response.json();
 
       if (response.ok) {

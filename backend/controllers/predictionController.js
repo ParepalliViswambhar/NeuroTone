@@ -20,7 +20,8 @@ exports.predictEmotion = async (req, res) => {
 
   try {
     // Call Flask ML service
-    const flaskResponse = await fetch("http://127.0.0.1:5000/predict", {
+    const mlServiceUrl = process.env.ML_SERVICE_URL || "http://127.0.0.1:5000";
+    const flaskResponse = await fetch(`${mlServiceUrl}/predict`, {
       method: "POST",
       body: formData,
       headers: formData.getHeaders(),
