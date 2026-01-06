@@ -33,7 +33,7 @@ const Home = () => {
     formData.append("file", file);
 
     try {
-      const response = await fetch("http://127.0.0.1:8000/predict", {
+      const response = await fetch("http://127.0.0.1:8000/api/predictions/predict", {
         method: "POST",
         body: formData,
       });
@@ -52,28 +52,116 @@ const Home = () => {
     }
   };
 
+  const emotionIcons = {
+    happiness: "😊",
+    sadness: "😢",
+    anger: "😠",
+    fear: "😨",
+    disgust: "🤢",
+    surprise: "😲",
+    neutral: "😐",
+    calm: "😌"
+  };
+
+  const getEmotionColor = (emotion) => {
+    const colors = {
+      happiness: "#FFD700",
+      sadness: "#4169E1",
+      anger: "#DC143C",
+      fear: "#9370DB",
+      disgust: "#32CD32",
+      surprise: "#FF69B4",
+      neutral: "#A9A9A9",
+      calm: "#87CEEB"
+    };
+    return colors[emotion?.toLowerCase()] || "#00ffc8";
+  };
+
   return (
     <div className="container">
-      <h2>Welcome, {username}</h2>
-      <h3>Enter Details</h3>
-      <input type="text" placeholder="Name" value={name} onChange={(e) => setName(e.target.value)} />
-      <input type="number" placeholder="Age" value={age} onChange={(e) => setAge(e.target.value)} />
-      <input type="file" accept="audio/*" onChange={(e) => setFile(e.target.files[0])} />
+      <h2>👋 Welcome, {username}</h2>
+      <h3>🎤 Emotion Analysis</h3>
+      
+      <div className="form-group">
+        <label>Name</label>
+        <input 
+          type="text" 
+          placeholder="Enter your name" 
+          value={name} 
+          onChange={(e) => setName(e.target.value)} 
+        />
+      </div>
+
+      <div className="form-group">
+        <label>Age</label>
+        <input 
+          type="number" 
+          placeholder="Enter your age" 
+          value={age} 
+          onChange={(e) => setAge(e.target.value)} 
+        />
+      </div>
+
+      <div className="form-group">
+        <label>Audio File</label>
+        <input 
+          type="file" 
+          accept="audio/*" 
+          onChange={(e) => setFile(e.target.files[0])} 
+        />
+      </div>
+
       <button onClick={handleSubmit} disabled={loading}>
-        {loading ? "Processing..." : "Submit"}
+        {loading ? (
+          <>
+            <span className="loader"></span> Analyzing...
+          </>
+        ) : (
+          "🚀 Analyze Emotion"
+        )}
       </button>
 
       {result && (
-        <div>
-          <h3>Predicted Emotion: {result.emotion}</h3>
-          <h4>Probabilities:</h4>
-          <ul>
-            {Object.entries(result.probabilities).map(([emotion, prob]) => (
-              <li key={emotion}>
-                {emotion}: {prob.toFixed(2)}
-              </li>
-            ))}
-          </ul>
+        <div className="emotion-result">
+          <div className="emotion-main">
+            <div className="emotion-icon">
+              {emotionIcons[result.emotion.toLowerCase()] || "🎭"}
+            </div>
+            <div className="emotion-label" style={{ color: getEmotionColor(result.emotion) }}>
+              {result.emotion}
+            </div>
+            <p style={{ fontSize: "18px", marginTop: "10px", opacity: 0.9 }}>
+              Primary Detected Emotion
+            </p>
+          </div>
+
+          <h3>📊 Emotion Breakdown</h3>
+          <div className="emotion-grid">
+            {Object.entries(result.probabilities)
+              .sort(([, a], [, b]) => b - a)
+              .map(([emotion, prob]) => (
+                <div key={emotion} className="emotion-card">
+                  <div className="emotion-card-header">
+                    <span className="emotion-name">{emotion}</span>
+                    <span className="emotion-icon-small">
+                      {emotionIcons[emotion.toLowerCase()] || "🎭"}
+                    </span>
+                  </div>
+                  <div className="emotion-percentage">
+                    {(prob * 100).toFixed(1)}%
+                  </div>
+                  <div className="progress-bar">
+                    <div 
+                      className="progress-fill" 
+                      style={{ 
+                        width: `${prob * 100}%`,
+                        background: `linear-gradient(90deg, ${getEmotionColor(emotion)}, #a8edea)`
+                      }}
+                    ></div>
+                  </div>
+                </div>
+              ))}
+          </div>
         </div>
       )}
     </div>
