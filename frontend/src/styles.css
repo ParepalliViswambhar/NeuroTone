@@ -39,6 +39,13 @@ h2 {
   background-clip: text;
 }
 
+h2 .emoji {
+  background: none;
+  -webkit-text-fill-color: initial;
+  background-clip: initial;
+  -webkit-background-clip: initial;
+}
+
 h3 {
   font-size: 24px;
   margin: 30px 0 20px 0;
@@ -152,6 +159,57 @@ nav {
   font-size: 24px;
   font-weight: 700;
   color: white;
+}
+
+.navbar-logo-waves {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  padding: 8px 12px;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 10px;
+  backdrop-filter: blur(10px);
+}
+
+.navbar-wave {
+  width: 4px;
+  background: white;
+  border-radius: 2px;
+  animation: navWaveAnimation 1.5s ease-in-out infinite;
+}
+
+.navbar-wave:nth-child(1) {
+  height: 16px;
+  animation-delay: 0s;
+}
+
+.navbar-wave:nth-child(2) {
+  height: 24px;
+  animation-delay: 0.1s;
+}
+
+.navbar-wave:nth-child(3) {
+  height: 32px;
+  animation-delay: 0.2s;
+}
+
+.navbar-wave:nth-child(4) {
+  height: 24px;
+  animation-delay: 0.3s;
+}
+
+.navbar-wave:nth-child(5) {
+  height: 16px;
+  animation-delay: 0.4s;
+}
+
+@keyframes navWaveAnimation {
+  0%, 100% {
+    transform: scaleY(1);
+  }
+  50% {
+    transform: scaleY(0.5);
+  }
 }
 
 .navbar-icon {

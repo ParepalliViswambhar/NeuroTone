@@ -85,9 +85,15 @@ const Login = () => {
       <div className="auth-container">
         <div className="auth-left">
           <div className="auth-branding">
-            <div className="brand-icon">🎭</div>
-            <h1 className="brand-title">Emotion AI</h1>
-            <p className="brand-subtitle">Understand emotions through voice analysis</p>
+            <div className="brand-logo-waves">
+              <div className="brand-wave"></div>
+              <div className="brand-wave"></div>
+              <div className="brand-wave"></div>
+              <div className="brand-wave"></div>
+              <div className="brand-wave"></div>
+            </div>
+            <h1 className="brand-title">Neurotone</h1>
+            <p className="brand-subtitle">AI-Powered Emotion Detection for Therapists</p>
             <div className="feature-list">
               <div className="feature-item">
                 <span className="feature-icon">🎤</span>
@@ -176,7 +182,7 @@ const Login = () => {
               </button>
 
               <div className="auth-divider">
-                <span>New to Emotion AI?</span>
+                <span>New to Neurotone?</span>
               </div>
 
               <button 

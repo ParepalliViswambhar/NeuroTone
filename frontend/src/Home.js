@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import API_URL from "./config";
 
 const Home = () => {
   const navigate = useNavigate();
+  const fileInputRef = useRef(null);
   const [username, setUsername] = useState("");
   const [name, setName] = useState("");
   const [age, setAge] = useState("");
@@ -45,6 +46,16 @@ const Home = () => {
 
       const data = await response.json();
       setResult(data);
+      
+      // Clear input fields after successful prediction
+      setName("");
+      setAge("");
+      setFile(null);
+      
+      // Reset file input element
+      if (fileInputRef.current) {
+        fileInputRef.current.value = "";
+      }
     } catch (error) {
       console.error("Error:", error);
       alert("Something went wrong. Please try again.");
@@ -80,7 +91,7 @@ const Home = () => {
 
   return (
     <div className="container">
-      <h2>👋 Welcome, {username}</h2>
+      <h2><span className="emoji">👋</span> Welcome, {username}</h2>
       <h3>🎤 Emotion Analysis</h3>
       
       <div className="form-group">
@@ -106,6 +117,7 @@ const Home = () => {
       <div className="form-group">
         <label>Audio File</label>
         <input 
+          ref={fileInputRef}
           type="file" 
           accept="audio/*" 
           onChange={(e) => setFile(e.target.files[0])} 
