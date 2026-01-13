@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faHome, faChartBar, faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
 import ConfirmModal from "./ConfirmModal";
 import "./ConfirmModal.css";
 
@@ -48,14 +50,14 @@ const Navbar = () => {
               to="/home" 
               className={`nav-link ${isActive('/home') ? 'nav-link-active' : ''}`}
             >
-              <span className="nav-icon">🏠</span>
+              <FontAwesomeIcon icon={faHome} className="nav-icon" />
               <span>Home</span>
             </Link>
             <Link 
               to="/reports" 
               className={`nav-link ${isActive('/reports') ? 'nav-link-active' : ''}`}
             >
-              <span className="nav-icon">📊</span>
+              <FontAwesomeIcon icon={faChartBar} className="nav-icon" />
               <span>Reports</span>
             </Link>
           </div>
@@ -86,7 +88,7 @@ const Navbar = () => {
                     </div>
                   </div>
                   <button className="profile-menu-item logout-item" onClick={handleLogout}>
-                    <span className="menu-item-icon">🚪</span>
+                    <FontAwesomeIcon icon={faRightFromBracket} className="menu-item-icon" />
                     <span>Logout</span>
                   </button>
                 </div>

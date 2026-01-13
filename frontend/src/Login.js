@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUser, faLock, faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import Toast from "./Toast";
 import "./auth.css";
 import API_URL from "./config";
@@ -121,7 +123,9 @@ const Login = () => {
 
             <div className="auth-form">
               <div className="input-group">
-                <div className="input-icon">👤</div>
+                <div className="input-icon">
+                  <FontAwesomeIcon icon={faUser} />
+                </div>
                 <input
                   type="text"
                   placeholder="Username"
@@ -139,7 +143,9 @@ const Login = () => {
               </div>
 
               <div className="input-group">
-                <div className="input-icon">🔒</div>
+                <div className="input-icon">
+                  <FontAwesomeIcon icon={faLock} />
+                </div>
                 <input
                   type={showPassword ? "text" : "password"}
                   placeholder="Password"
@@ -156,7 +162,7 @@ const Login = () => {
                   className="password-toggle"
                   onClick={() => setShowPassword(!showPassword)}
                 >
-                  {showPassword ? "👀" : "🙈"}
+                  <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
                 </button>
                 {errors.password && (
                   <span className="error-message">{errors.password}</span>

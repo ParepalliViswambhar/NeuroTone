@@ -1,5 +1,8 @@
 import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUser, faCalendar, faFileAudio, faRocket, faChartBar, faMicrophone } from "@fortawesome/free-solid-svg-icons";
+import AudioRecorder from "./AudioRecorder";
 import API_URL from "./config";
 
 const Home = () => {
@@ -11,6 +14,7 @@ const Home = () => {
   const [file, setFile] = useState(null);
   const [result, setResult] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [uploadMethod, setUploadMethod] = useState("file"); // "file" or "record"
 
   useEffect(() => {
     const storedUsername = localStorage.getItem("username");
@@ -51,6 +55,7 @@ const Home = () => {
       setName("");
       setAge("");
       setFile(null);
+      setUploadMethod("file"); // Reset to file upload mode
       
       // Reset file input element
       if (fileInputRef.current) {
@@ -89,13 +94,20 @@ const Home = () => {
     return colors[emotion?.toLowerCase()] || "#00ffc8";
   };
 
+  const handleRecordedAudio = (audioFile) => {
+    setFile(audioFile);
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
+  };
+
   return (
     <div className="container">
-      <h2><span className="emoji">👋</span> Welcome, {username}</h2>
-      <h3>🎤 Emotion Analysis</h3>
+      <h2>Welcome, {username}</h2>
+      <h3><FontAwesomeIcon icon={faChartBar} /> Emotion Analysis</h3>
       
       <div className="form-group">
-        <label>Name</label>
+        <label><FontAwesomeIcon icon={faUser} /> Name</label>
         <input 
           type="text" 
           placeholder="Enter your name" 
@@ -105,7 +117,7 @@ const Home = () => {
       </div>
 
       <div className="form-group">
-        <label>Age</label>
+        <label><FontAwesomeIcon icon={faCalendar} /> Age</label>
         <input 
           type="number" 
           placeholder="Enter your age" 
@@ -115,13 +127,48 @@ const Home = () => {
       </div>
 
       <div className="form-group">
-        <label>Audio File</label>
-        <input 
-          ref={fileInputRef}
-          type="file" 
-          accept="audio/*" 
-          onChange={(e) => setFile(e.target.files[0])} 
-        />
+        <label><FontAwesomeIcon icon={faFileAudio} /> Audio Input</label>
+        
+        <div className="upload-method-selector">
+          <button
+            type="button"
+            className={`method-btn ${uploadMethod === "file" ? "active" : ""}`}
+            onClick={() => {
+              setUploadMethod("file");
+              setFile(null);
+            }}
+          >
+            <FontAwesomeIcon icon={faFileAudio} /> Upload File
+          </button>
+          <button
+            type="button"
+            className={`method-btn ${uploadMethod === "record" ? "active" : ""}`}
+            onClick={() => {
+              setUploadMethod("record");
+              setFile(null);
+              if (fileInputRef.current) fileInputRef.current.value = "";
+            }}
+          >
+            <FontAwesomeIcon icon={faMicrophone} /> Record Audio
+          </button>
+        </div>
+
+        {uploadMethod === "file" ? (
+          <input 
+            ref={fileInputRef}
+            type="file" 
+            accept="audio/*" 
+            onChange={(e) => setFile(e.target.files[0])} 
+          />
+        ) : (
+          <AudioRecorder onAudioReady={handleRecordedAudio} />
+        )}
+        
+        {file && (
+          <div className="file-selected">
+            <FontAwesomeIcon icon={faFileAudio} /> {file.name}
+          </div>
+        )}
       </div>
 
       <button onClick={handleSubmit} disabled={loading}>
@@ -130,7 +177,9 @@ const Home = () => {
             <span className="loader"></span> Analyzing...
           </>
         ) : (
-          "🚀 Analyze Emotion"
+          <>
+            <FontAwesomeIcon icon={faRocket} /> Analyze Emotion
+          </>
         )}
       </button>
 

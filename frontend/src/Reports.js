@@ -1,5 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { 
+  faUser, 
+  faCakeCandles, 
+  faCalendarDays, 
+  faChevronDown, 
+  faChevronUp,
+  faInbox,
+  faChartBar
+} from "@fortawesome/free-solid-svg-icons";
 import { ReportSkeleton } from "./LoadingSkeleton";
 import API_URL from "./config";
 
@@ -70,8 +80,8 @@ const Reports = () => {
 
   return (
     <div className="container">
-      <h2>👋 Welcome, {username}</h2>
-      <h3>📋 Your Emotion Reports</h3>
+      <h2>Welcome, {username}</h2>
+      <h3><FontAwesomeIcon icon={faChartBar} /> Your Emotion Reports</h3>
       
       {loading ? (
         <>
@@ -85,11 +95,13 @@ const Reports = () => {
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
               <div>
                 <p style={{ fontSize: "20px", fontWeight: "bold", marginBottom: "8px" }}>
-                  👤 {report.name}
+                  <FontAwesomeIcon icon={faUser} /> {report.name}
                 </p>
-                <p style={{ opacity: 0.8, marginBottom: "5px" }}>🎂 Age: {report.age}</p>
+                <p style={{ opacity: 0.8, marginBottom: "5px" }}>
+                  <FontAwesomeIcon icon={faCakeCandles} /> Age: {report.age}
+                </p>
                 <p style={{ opacity: 0.7, fontSize: "13px" }}>
-                  📅 {new Date(report.createdAt).toLocaleDateString()} {new Date(report.createdAt).toLocaleTimeString()}
+                  <FontAwesomeIcon icon={faCalendarDays} /> {new Date(report.createdAt).toLocaleDateString()} {new Date(report.createdAt).toLocaleTimeString()}
                 </p>
               </div>
               <div style={{ textAlign: "right" }}>
@@ -112,7 +124,7 @@ const Reports = () => {
             {expandedReport === index && report.probabilities && (
               <div style={{ marginTop: "25px", paddingTop: "20px", borderTop: "1px solid rgba(0, 255, 200, 0.2)" }}>
                 <h4 style={{ marginBottom: "15px", color: "#00ffc8", fontSize: "16px" }}>
-                  📊 All Emotion Probabilities
+                  <FontAwesomeIcon icon={faChartBar} /> All Emotion Probabilities
                 </h4>
                 <div className="emotion-grid" style={{ gap: "15px" }}>
                   {Object.entries(report.probabilities)
@@ -146,23 +158,31 @@ const Reports = () => {
                   textAlign: "center", 
                   marginTop: "15px", 
                   fontSize: "13px", 
-                  opacity: 0.6 
+                  opacity: 0.6,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  gap: "8px"
                 }}>
-                  Click again to collapse
+                  <FontAwesomeIcon icon={faChevronUp} /> Click again to collapse
                 </p>
               </div>
             )}
             
-            {!expandedReport || expandedReport !== index ? (
+            {expandedReport !== index && (
               <p style={{ 
                 textAlign: "center", 
                 marginTop: "15px", 
                 fontSize: "13px", 
-                opacity: 0.6 
+                opacity: 0.6,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: "8px"
               }}>
-                Click to view all emotions
+                <FontAwesomeIcon icon={faChevronDown} /> Click to view all emotions
               </p>
-            ) : null}
+            )}
           </div>
         ))
       ) : (
@@ -172,7 +192,10 @@ const Reports = () => {
           opacity: 0.7,
           fontSize: "18px" 
         }}>
-          <p>📭 No reports available yet</p>
+          <div style={{ fontSize: "48px", marginBottom: "20px" }}>
+            <FontAwesomeIcon icon={faInbox} />
+          </div>
+          <p>No reports available yet</p>
           <p style={{ fontSize: "14px", marginTop: "10px" }}>
             Start analyzing emotions to see your reports here!
           </p>

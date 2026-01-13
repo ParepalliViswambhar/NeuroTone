@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUser, faLock, faKey, faEye, faEyeSlash, faCheck } from "@fortawesome/free-solid-svg-icons";
 import Toast from "./Toast";
 import "./auth.css";
 import API_URL from "./config";
@@ -157,7 +159,9 @@ const Signup = () => {
 
             <div className="auth-form">
               <div className="input-group">
-                <div className="input-icon">👤</div>
+                <div className="input-icon">
+                  <FontAwesomeIcon icon={faUser} />
+                </div>
                 <input
                   type="text"
                   placeholder="Choose a username (min 3 characters)"
@@ -175,7 +179,9 @@ const Signup = () => {
               </div>
 
               <div className="input-group">
-                <div className="input-icon">🔒</div>
+                <div className="input-icon">
+                  <FontAwesomeIcon icon={faLock} />
+                </div>
                 <input
                   type={showPassword ? "text" : "password"}
                   placeholder="Create a password (min 6 characters)"
@@ -192,7 +198,7 @@ const Signup = () => {
                   className="password-toggle"
                   onClick={() => setShowPassword(!showPassword)}
                 >
-                  {showPassword ? "👀" : "🙈"}
+                  <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
                 </button>
                 {errors.password && (
                   <span className="error-message">{errors.password}</span>
@@ -216,7 +222,9 @@ const Signup = () => {
               </div>
 
               <div className="input-group">
-                <div className="input-icon confirm-icon">🔑</div>
+                <div className="input-icon confirm-icon">
+                  <FontAwesomeIcon icon={faKey} />
+                </div>
                 <input
                   type={showConfirmPassword ? "text" : "password"}
                   placeholder="Confirm password"
@@ -233,13 +241,15 @@ const Signup = () => {
                   className="password-toggle"
                   onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                 >
-                  {showConfirmPassword ? "👀" : "🙈"}
+                  <FontAwesomeIcon icon={showConfirmPassword ? faEyeSlash : faEye} />
                 </button>
                 {errors.confirmPassword && (
                   <span className="error-message">{errors.confirmPassword}</span>
                 )}
                 {confirmPassword && password === confirmPassword && (
-                  <span className="success-message">✓ Passwords match</span>
+                  <span className="success-message">
+                    <FontAwesomeIcon icon={faCheck} /> Passwords match
+                  </span>
                 )}
               </div>
 
