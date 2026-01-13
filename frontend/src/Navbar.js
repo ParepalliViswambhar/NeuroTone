@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHome, faChartBar, faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
@@ -11,6 +11,25 @@ const Navbar = () => {
   const username = localStorage.getItem("username");
   const [showProfileMenu, setShowProfileMenu] = useState(false);
   const [showLogoutModal, setShowLogoutModal] = useState(false);
+  const dropdownRef = useRef(null);
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setShowProfileMenu(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
+  const toggleProfileMenu = () => {
+    setShowProfileMenu(!showProfileMenu);
+  };
 
   const handleLogout = () => {
     setShowLogoutModal(true);
@@ -65,10 +84,9 @@ const Navbar = () => {
           <div className="navbar-user">
             <div 
               className="profile-dropdown"
-              onMouseEnter={() => setShowProfileMenu(true)}
-              onMouseLeave={() => setShowProfileMenu(false)}
+              ref={dropdownRef}
             >
-              <div className="profile-trigger">
+              <div className="profile-trigger" onClick={toggleProfileMenu}>
                 <div className="profile-avatar">
                   {username ? username.charAt(0).toUpperCase() : "U"}
                 </div>
